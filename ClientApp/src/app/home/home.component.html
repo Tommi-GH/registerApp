@@ -1,0 +1,11 @@
+<h1>Welcome!</h1>
+
+<div *ngIf="auth.isAuthenticated()">
+  <p>You have {{ expired }} products already expired, {{ expireThisMonth }} expiring products this month, {{ expireNextMonth }} expiring products next month and {{ expireLater }} expiring later than that.</p>
+
+
+  <p *ngIf="!data">Loading data...</p>
+  <div class="chart" *ngIf="data">
+  <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class='main-nav'>
+    <div class='navbar navbar-inverse'>
+        <div class='navbar-header'>      
+            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
+                <span class='sr-only'>Toggle navigation</span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+            </button>
+            <a class='navbar-brand' [routerLink]='["/"]'>myregister_angular5</a>
+        </div>
+        <div class='clearfix'></div>
+        <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }' >
+            <ul class='nav navbar-nav' *ngIf="auth.isAuthenticated()">
+                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+                    <a [routerLink]='["/dashboard"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-home'></span> Dashboard
+                    </a>
+                </li>
+                <li [routerLinkActive]='["link-active"]'>
+                    <a [routerLink]='["/products"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-th-list'></span> Products
+                    </a>
+                </li>
+                <li [routerLinkActive]='["link-active"]'>
+                    <a [routerLink]='["/product-types"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-th-list'></span> Product types
+                    </a>
+                </li>
+                <li [routerLinkActive]='["link-active"]'>
+                    <a [routerLink]='["/user-settings"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-th-list'></span> User settings
+                    </a>
+                </li>
+                <li [routerLinkActive]='["link-active"]' *ngIf="auth.userHasScopes(['write:settings'])">
+                    <a [routerLink]='["/admin"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-th-list'></span> Admin
+                    </a>
+                </li>
+            </ul>
+            
+          <p id="loggedText" *ngIf="auth.isAuthenticated()"> Logged in as: {{nickname}}</p>
+            <button
+            class="btn btn-primary btn-margin"
+            *ngIf="!auth.isAuthenticated()"
+            (click)="auth.login()"
+            [routerLink]='["/"]'>
+              Log In
+          </button>
+          <button
+            class="btn btn-primary btn-margin"
+            *ngIf="auth.isAuthenticated()"
+            (click)="auth.logout(false)"
+            [routerLink]='["/"]'>
+              Log Out
+          </button>
+          <button
+            class="btn btn-primary btn-margin"
+            *ngIf="auth.isAuthenticated()"
+            (click)="auth.logout(true)"
+            [routerLink]='["/"]'>
+              Log Out auth0
+          </button>
+        </div>
+    </div>
+</div>

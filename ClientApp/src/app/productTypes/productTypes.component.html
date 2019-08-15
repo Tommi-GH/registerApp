@@ -1,0 +1,49 @@
+<h1>Product types</h1>
+<div *ngIf="auth.userHasScopes(['write:product'])">
+<h2>
+  Add product types:
+</h2>
+<form (ngSubmit)="onSubmit()" #productForm="ngForm">
+  <div>
+    <mat-form-field class="form-group">
+      <input matInput class="form-control" id="name" placeholder="Type name" [(ngModel)]="model.name" name="name">
+    </mat-form-field>
+  </div>
+  <button mat-raised-button type="submit" [disabled]="!productForm.form.valid">Submit</button>
+</form>
+</div>
+<h2>
+  Available product types:
+</h2>
+<p *ngIf="!productTypes">Loading..</p>
+<div>
+<table mat-table *ngIf="productTypes" [dataSource]="productTypes" class="mat-elevation-z8">
+
+  <!-- Id Column -->
+  <ng-container matColumnDef="productTypeId">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let pType"> {{pType.productTypeId}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let pType"> {{pType.name}} </td>
+  </ng-container>
+
+  <!-- Options Column -->
+  <ng-container matColumnDef="options">
+    <th mat-header-cell *matHeaderCellDef> Options </th>
+    <td mat-cell *matCellDef="let pType"> 
+      <button mat-raised-button color="primary" id="editBtn"
+      (click)="editProductType(pType)">Edit</button> 
+
+      <button mat-stroked-button color="warn" 
+      (click)="deleteProductType(pType.productTypeId)">Delete</button> </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
+
